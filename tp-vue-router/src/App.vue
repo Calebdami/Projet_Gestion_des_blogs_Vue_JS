@@ -2,27 +2,23 @@
     import Navigation from '@/components/Navigation.vue'
 </script>
 
-<template>
+<!-- <template>
     <div class="app">
         <div class="container">
             <Navigation />
             <RouterView />
         </div>
     </div>
+</template> -->
+
+<!-- App.vue -->
+<template>
+    <div class="app">
+        <div class="container">
+            <!-- On n'affiche la Navigation que si on n'est pas sur SignIn ou SignUp -->
+            <Navigation v-if="$route.name !== 'signIn-signUp' && $route.name !== 'signUp'" />
+            <RouterView />
+        </div>
+    </div>
 </template>
 
-<style scoped>
-    .app{
-        min-height: 100vh;
-        background-color: #A8DADC;
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-    }
-
-    .container{
-        margin-top: 2vh;
-        width: 80vw;
-    }
-
-</style>

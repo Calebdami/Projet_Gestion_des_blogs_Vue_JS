@@ -1,9 +1,8 @@
 <script setup>
     import { ref, onMounted } from 'vue'
-    import { useRoute, useRouter } from 'vue-router'
+    import { useRoute } from 'vue-router'
 
     const route = useRoute();
-    const router = useRouter();
     const post = ref(null);
     const loading = ref(true);
 
@@ -25,17 +24,6 @@
             <h1>{{ post.title }}</h1>
             <p>{{ post.body }}</p>
         </article>
-        <router-link to="/blog">Retour</router-link>
+        <router-link class="retour" to="/blog">Retour</router-link>
     </section>
 </template>
-
-<style scoped>
-    h1 {
-        color: #2a205a;
-    }
-
-    p {
-        font-size: 1.5rem;
-        color: #2a205a;
-    }
-</style>

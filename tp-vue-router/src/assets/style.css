@@ -1,0 +1,290 @@
+@font-face {
+    font-family: 'GloriaHallelujah';
+    src: url('./fonts/GloriaHallelujah-Regular.ttf') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* --- CONFIGURATION --- */
+:root {
+    --bg-dark: #050505;
+    --card-bg: #111111;
+    --primary: #ffffff;
+    --accent: #3b82f6; /* Bleu électrique discret */
+    --text-dim: #94a3b8;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'GloriaHallelujah', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    line-height: 1.5;
+}
+
+/* --- EFFET DE FOND (MESH GRADIENT) --- */
+.app {
+    min-height: 100vh;
+    background: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 90vw;
+    max-width: 1100px;
+    padding-top: 4rem;
+}
+
+/* --- NAVIGATION MINIMALISTE --- */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 5rem;
+}
+
+.menuNav {
+    text-decoration: none;
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: color 0.4s ease, transform 0.2s;
+}
+
+.menuNav:hover, .router-link-active {
+    color: var(--primary);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+#signup, #signin{
+    color: white;
+}
+
+.show {
+    color: white;
+}
+
+.clickLike {
+    cursor: pointer;
+}
+
+.retour {
+    cursor: pointer;
+    color: white;
+}
+
+/* --- CARTES & ARTICLES (GLASSMORPHISM) --- */
+article, .formulaire, .bento-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+article:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(241, 240, 240, 0.4);
+}
+
+/* --- FORMULAIRES --- */
+.formulaire {
+    max-width: 400px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, #111111, #0a0a0a);
+    border: solid white;
+}
+
+input {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    transition: border 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 12px;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: #e2e2e2;
+}
+
+/* --- HOME BENTO --- */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 220px;
+    gap: 20px;
+}
+
+.hero {
+    grid-column: span 2;
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: radial-gradient(at top left, #1a1a1a, #0a0a0a);
+}
+
+.hero h1 { font-size: 4rem; line-height: 1; margin-bottom: 1.5rem; }
+.hero h1 span {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    -webkit-background-cli: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- ANIMATIONS DE REVEAL --- */
+@keyframes reveal {
+    from { opacity: 0; clip-path: inset(10% 0 10% 0); transform: translateY(30px); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+section {
+    animation: reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Animation de secousse */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    border-color: #ef4444 !important; /* Devient rouge brièvement */
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* Tablette (Moins de 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        width: 92vw;
+        padding-top: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr); /* Passage à 2 colonnes */
+    }
+}
+
+/* Smartphone (Moins de 768px) */
+@media (max-width: 768px) {
+    .menu {
+        gap: 1rem;
+        flex-wrap: wrap; /* Les liens passent à la ligne si besoin */
+        margin-bottom: 3rem;
+    }
+
+    .menuNav {
+        font-size: 0.85rem;
+    }
+
+    /* Le Bento devient une liste verticale */
+    .bento-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto; /* Hauteur automatique selon le contenu */
+    }
+
+    .hero {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    /* Ajustement des formulaires */
+    section {
+        width: 100% !important; /* Force la largeur sur mobile */
+    }
+
+    .formulaire {
+        padding: 1.5rem;
+        margin: 0;
+    }
+
+    /* Ajustement du Blog */
+    .big {
+        flex-direction: column; /* Menu de côté passe en haut */
+        gap: 2rem;
+    }
+
+    .big .menu {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto; /* Scroll horizontal pour les catégories de blog */
+        padding-bottom: 10px;
+        justify-content: flex-start;
+    }
+
+    article {
+        padding: 1.5rem;
+    }
+
+    .info {
+        position: relative; /* Évite que les stats chevauchent le texte */
+        right: 0;
+        margin-top: 1rem;
+        display: block;
+    }
+}
+
+/* Très petits écrans (Moins de 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding-top: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem !important;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Menu en grille 2x3 */
+        text-align: center;
+        gap: 0.5rem;
+    }
+}
