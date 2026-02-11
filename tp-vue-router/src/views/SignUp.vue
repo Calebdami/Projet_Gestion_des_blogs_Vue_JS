@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from 'vue';
-
+    import router from '@/router'
     const name = ref('');
     const gmail = ref('');
     const password1 = ref('');
@@ -21,7 +21,7 @@
             gmail.value = '';
             password1.value = '';
             password2.value = '';
-            window.location = "http://localhost:5173/";
+            router.push('/signIn');
             return;
         };
         name.value = '';
@@ -46,8 +46,7 @@
             <label for="">Confirm Password</label>
             <input type="password" placeholder="Password" v-model="password2" required>
             <button @click.prevent="confirmSignUp">Se connecter</button>
-            <RouterLink id="signup" to="/">Vous avez déjà un compte ? Connectez vous</RouterLink>
+            <RouterLink id="signup" to="/signIn">Vous avez déjà un compte ? Connectez vous</RouterLink>
         </form>
     </section>
 </template>
-

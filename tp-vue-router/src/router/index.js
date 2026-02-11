@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { isAuthenticated } from '@/services/authService';
 
 import BlogDetail from '@/views/BlogDetail.vue'
 import Home from '@/views/Home.vue'
@@ -13,10 +14,10 @@ import ActualiteBenin from '@/views/Blog/ActualiteBenin.vue'
 import ActualiteInternationale from '@/views/Blog/ActualiteInternationale.vue'
 
 const routes = [
-    { path: '/', name: 'signIn-signUp', component: SignIn },
+    { path: '/signIn', name: 'signIn', component: SignIn },
     { path: '/signUp', name: 'signUp', component: SignUp },
 
-    { path: '/home', name: 'home', component: Home, meta: { requiresAuth: true }},
+    { path: '/', name: 'home', component: Home, meta: { requiresAuth: true }},
     { path: '/about', name: 'about', component: About, meta: { requiresAuth: true } },
     { path: '/services', name: 'services', component: Services, meta: { requiresAuth: true } },
     { path: '/blog', name: 'blog', component: Blog, meta: { requiresAuth: true },children:[
@@ -35,14 +36,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    // On vérifie si l'utilisateur est marqué comme connecté
-    const isAuthenticated = localStorage.getItem("userConnected") === "true";
+    const loggedIn = isAuthenticated.value;
 
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        // Si la page demande une connexion et que l'utilisateur n'est pas connecté
-        next({ name: 'signIn-signUp' }); // Redirection vers Sign In
+    // 1. Si on tente d'aller sur une page privée sans être connecté
+    // Par défaut, on protège tout sauf SignIn et SignUp
+    if (!loggedIn && to.name !== 'signIn' && to.name !== 'signUp') {
+        next({ name: 'signIn' });
     } 
-    else { next()} // Sinon, on laisse passer 
+    // 2. Si on est déjà connecté et qu'on essaie d'aller sur SignIn ou SignUp (via l'URL)
+    else if (loggedIn && (to.name === 'signIn' || to.name === 'signUp')) {
+        next({ name: 'home' });
+    } 
+    // 3. Sinon, on laisse passer
+    else {
+        next();
+    }
 });
 
 export default router

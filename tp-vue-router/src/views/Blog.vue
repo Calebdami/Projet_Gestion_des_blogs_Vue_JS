@@ -15,7 +15,7 @@
         finally { loading.value = false }
     })
 
-    onUnmounted(() => { console.log('Le composant Blog est détruit') })
+    onUnmounted(() => {})
 
 </script>
 
